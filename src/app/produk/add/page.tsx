@@ -26,6 +26,15 @@ export default function AddProduk() {
 
   const handleSubmit = async () => {
     try {
+      if (
+        !data.nama_produk ||
+        !data.harga ||
+        !data.kategori_id ||
+        !data.status_id
+      ) {
+        alert("mohon lengkapi data yang diperlukan!");
+        return null;
+      }
       const res = await fetch("/api/produk", {
         method: "POST",
         headers: {
@@ -39,8 +48,6 @@ export default function AddProduk() {
       return null;
     }
   };
-
-  console.log(data);
 
   return (
     <section className="w-screen h-screen flex justify-center pt-10">
@@ -79,8 +86,9 @@ export default function AddProduk() {
               name="kategori_id"
               onChange={handleChange}
               required
+              defaultValue={"DEFAULT"}
             >
-              <option disabled selected>
+              <option disabled value={"DEFAULT"}>
                 pilih kategori
               </option>
               <option value="1">L QUEENLY</option>
@@ -98,8 +106,9 @@ export default function AddProduk() {
               name="status_id"
               onChange={handleChange}
               required
+              defaultValue={"DEFAULT"}
             >
-              <option disabled selected>
+              <option disabled value={"DEFAULT"}>
                 pilih status
               </option>
               <option value="1">Bisa Dijual</option>
@@ -118,7 +127,7 @@ export default function AddProduk() {
               icon={faDatabase}
             />
             <p className="text-center px-2 py-2 w-4/5 text-white font-medium">
-              Save
+              Tambah
             </p>
           </button>
           <button className="rounded flex w-auto h-full justify-between items-center h-4/5 bg-yellow-500 hover:bg-yellow-700">
@@ -130,7 +139,7 @@ export default function AddProduk() {
               className="text-center px-2.5 py-2 w-4/5 text-white font-medium"
               onClick={() => router.back()}
             >
-              Cancel
+              Batal
             </p>
           </button>
         </div>

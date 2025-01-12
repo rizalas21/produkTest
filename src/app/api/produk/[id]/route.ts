@@ -8,14 +8,13 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    console.log(id);
     const { rows } = await db.query(
       "SELECT * FROM produk WHERE id_produk = $1",
       [id]
     );
     return NextResponse.json(rows[0]);
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(error);
   }
 }
 
@@ -25,13 +24,13 @@ export async function DELETE(
 ) {
   const { id } = await params;
   try {
-    const res = await db.query(
+    const { rows } = await db.query(
       "DELETE FROM produk WHERE id_produk = $1 RETURNING *",
       [id]
     );
-    return NextResponse.json(res);
+    return NextResponse.json(rows[0]);
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(error);
   }
 }
 
@@ -48,6 +47,6 @@ export async function PUT(
     );
     return NextResponse.json(res);
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(error);
   }
 }
